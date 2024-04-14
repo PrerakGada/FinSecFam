@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "745453900534",
+    "project_id": "finsecfam",
+    "storage_bucket": "finsecfam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:745453900534:android:198083a6e88edeaa1112d7",
+        "android_client_info": {
+          "package_name": "in.innovativeminds.finsec"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "745453900534-vu547h1sql7tc10d5b09mpti3a9c3f9k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.innovativeminds.finsec",
+            "certificate_hash": "bd9bd4d7dd099fc87b6866d048351138d798d5a4"
+          }
+        },
+        {
+          "client_id": "745453900534-2jpl8275uqg2hrtukr114l1skj5dqhq4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw8uMWpKXJ4sqWBXN4K0XDozq3Iyj1Yho"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "745453900534-2jpl8275uqg2hrtukr114l1skj5dqhq4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "745453900534-5341ortks7crqakseocr95rq3hg48vlq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "in.innovativeminds.finsec"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

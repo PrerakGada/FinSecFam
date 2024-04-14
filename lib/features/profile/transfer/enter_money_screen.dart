@@ -88,25 +88,15 @@ class EnterMoneyScreen extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      print(scannedData);
                       return Dialog(
                         child: Lottie.asset('assets/logos/celebration.json', onLoaded: (composition) async {
-                          var response = await http.get(
-                            Uri.parse('$backendUrl/auth/users'),
-                            headers: <String, String>{
-                              'Content-Type': 'application/json; charset=UTF-8',
-                            },
-                          );
-                          var users = jsonDecode(response.body);
-                          var user = users.firstWhere((user) => user['name'] == scannedData[2], orElse: () => "FSEOM9fFBiO52PdOpnWtM81ZGm42");
-
-                          response = await http.post(
-                            Uri.parse('$backendUrl/notifications'),
+                          var response = await http.post(
+                            Uri.parse('https://app.engaze.in/notifications'),
                             headers: <String, String>{
                               'Content-Type': 'application/json; charset=UTF-8',
                             },
                             body: jsonEncode(<String, dynamic>{
-                              'userIds': [user['id']],
+                              'userIds': ['FSEOM9fFBiO52PdOpnWtM81ZGm42'],
                               'notifTitle': 'You\'ve received money!',
                               'data': {
                                 'test': '123a',

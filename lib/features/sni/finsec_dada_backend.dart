@@ -9,8 +9,8 @@ class Message {
   Message(this.isSender, this.msg);
 }
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({
+class ChatScreen2 extends StatefulWidget {
+  const ChatScreen2({
     super.key,
     required this.topic,
   });
@@ -18,10 +18,10 @@ class ChatScreen extends StatefulWidget {
   final String topic;
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<ChatScreen2> createState() => _ChatScreen2State();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatScreen2State extends State<ChatScreen2> {
   TextEditingController controller = TextEditingController();
   ScrollController scrollController = ScrollController();
   List<Message> msgs = [];
@@ -36,7 +36,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void sendMsg() async {
     String text = controller.text;
-    String apiKey = "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";
     controller.clear();
     try {
       if (text.isNotEmpty) {
@@ -45,23 +44,16 @@ class _ChatScreenState extends State<ChatScreen> {
           isTyping = true;
         });
         scrollController.animateTo(0.0, duration: const Duration(seconds: 1), curve: Curves.easeOut);
-        var response = await http.post(Uri.parse("https://api.openai.com/v1/chat/completions"),
-            headers: {"Authorization": "Bearer $apiKey", "Content-Type": "application/json"},
+        var response = await http.post(Uri.parse("https://app.engaze.in/chat"),
+            headers: {"Content-Type": "application/json"},
             body: jsonEncode({
-              "model": "gpt-3.5-turbo",
-              "messages": [
-                {
-                  "role": "system",
-                  "content":
-                      "You're FinSec Dada, your job is to help me about information about stocks. You're opinionated and wise, act as such, keep your thoughts very very short and direct on what to buy and recommend alternatives is presented choices are not great. If every response add a little bit about yourself. Based on this answer the following question $text"
-                }
-              ]
+              "input": text,
             }));
         if (response.statusCode == 200) {
           var json = jsonDecode(response.body);
           setState(() {
             isTyping = false;
-            msgs.insert(0, Message(false, json["choices"][0]["message"]["content"].toString().trimLeft()));
+            msgs.insert(0, Message(false, json["data"].toString().trimLeft()));
           });
           scrollController.animateTo(0.0, duration: const Duration(seconds: 1), curve: Curves.easeOut);
         }
@@ -75,7 +67,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Dadaji"),
+        title: const Text("Finsec Papa"),
       ),
       body: Column(
         children: [

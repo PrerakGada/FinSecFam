@@ -1,4 +1,5 @@
 import 'package:finsec/features/profile/transfer/family_sheets/mom_sheet_1.dart';
+import 'package:finsec/features/profile/transfer/family_sheets/papa_sheet_2.dart';
 import 'package:finsec/utils/utils.dart';
 import 'package:finsec/widgets/custom_chip_row.dart';
 import 'package:finsec/widgets/primary_textfield.dart';
@@ -26,6 +27,10 @@ class _MoneyManagerScreenState extends State<MoneyManagerScreen> {
   var _selectedDay = DateTime.now();
   var _focusedDay = DateTime.now();
   int selectedIndex = 0;
+  final amountController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final accountController = TextEditingController();
+  final categoryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -137,16 +142,12 @@ class _MoneyManagerScreenState extends State<MoneyManagerScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: Text("btn1"),
         onPressed: () {
           // Add new transaction
           showModalBottomSheet(
             context: context,
             builder: (BuildContext context) {
-              final amountController = TextEditingController();
-              final descriptionController = TextEditingController();
-              final accountController = TextEditingController();
-              final categoryController = TextEditingController();
-
               return SafeArea(
                 child: Container(
                   padding: EdgeInsets.all(16),
@@ -190,10 +191,20 @@ class _MoneyManagerScreenState extends State<MoneyManagerScreen> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      PrimaryTextField(
-                        controller: amountController,
-                        hintText: "Amount",
-                        labelText: "Amount",
+                      SizedBox(
+                        height: 52,
+                        child: TextField(
+                          controller: amountController,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            hintText: "Amount",
+                            labelText: "Amount",
+                            alignLabelWithHint: true,
+                            border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(8)),
+                            ),
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 10),
                       PrimaryTextField(
@@ -244,7 +255,10 @@ class _MoneyManagerScreenState extends State<MoneyManagerScreen> {
                                         showModalBottomSheet(
                                           context: context,
                                           builder: (BuildContext context) {
-                                            return MomSheet1(pageController: PageController());
+                                            return PapaSheet2(
+                                              pageController: PageController(),
+                                              money: amountController.text,
+                                            );
                                           },
                                         );
                                       },

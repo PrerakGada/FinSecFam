@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:finsec/logic/stores/state_store.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../logic/stores/auth_store.dart';
-import '../../utils/routes/app_router.gr.dart';
 import '../../utils/utils.dart';
 
 @RoutePage()
@@ -45,6 +45,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
   Future<void> initApis() async {
     log("SplashScreen | initApis");
+
+    context.read<StateStore>().getTransactions();
 
     // ask for notification permission\
 

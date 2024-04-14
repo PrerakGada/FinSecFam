@@ -84,17 +84,17 @@ class _StockScreenState extends State<StockScreen> with SingleTickerProviderStat
       _stockList = StockList.fromJson(map);
       // print(stockListToJson(_stockList));
     });
-    // for (int i = 0; i < 10; i++) {
-    //   var stock = _stockList.data[i];
-    //   var stockData = await fetchStockData(stock.symbol);
-    //   setState(() {
-    //     _stockList.data[i].open = stockData['open'];
-    //     _stockList.data[i].high = stockData['high'];
-    //     _stockList.data[i].low = stockData['low'];
-    //     _stockList.data[i].last = stockData['last'];
-    //     _stockList.data[i].close = stockData['close'];
-    //   });
-    // }
+    for (int i = 0; i < 10; i++) {
+      var stock = _stockList.data[i];
+      var stockData = await fetchStockData(stock.symbol);
+      setState(() {
+        _stockList.data[i].open = stockData['open'];
+        _stockList.data[i].high = stockData['high'];
+        _stockList.data[i].low = stockData['low'];
+        _stockList.data[i].last = stockData['last'];
+        _stockList.data[i].close = stockData['close'];
+      });
+    }
     for (var stock in _stockList.data) {
       final response = await http.get(Uri.parse('https://api.finnworlds.com/api/v1/consensusratings?key=4140951ded734e69aa5e9e986dc7651e&ticker=${stock.symbol}'));
 
@@ -668,7 +668,9 @@ class _StockScreenState extends State<StockScreen> with SingleTickerProviderStat
                                           context: context,
                                           builder: (context) => Container(
                                                 height: MediaQuery.of(context).size.height * 0.68,
-                                                child: PapaSheet(pageController: PageController(),),
+                                                child: PapaSheet(
+                                                  pageController: PageController(),
+                                                ),
                                               ));
                                     },
                                     child: Text(
@@ -1043,7 +1045,6 @@ class _StockScreenState extends State<StockScreen> with SingleTickerProviderStat
             title: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                
                 Text(
                   DateFormat('MMMM dd').format(DateTime.now()),
                   style: const TextStyle(

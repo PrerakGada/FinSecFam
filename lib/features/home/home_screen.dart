@@ -113,9 +113,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     GestureDetector(
                       onTap: () async {
                         //AutoRouter.of(context).push(NotificationRoute()),
-                        //await FirebaseAuth.instance.signOut();
-                        //if (context.mounted) AutoRouter.of(context).replaceAll([const SplashRoute()]);
-                        StateStore().getInvestments();
+                        await FirebaseAuth.instance.signOut();
+                        if (context.mounted) AutoRouter.of(context).replaceAll([const SplashRoute()]);
                       },
                       child: const Icon(
                         Icons.logout,
@@ -133,10 +132,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 370,
                   child: Swiper(
                     itemBuilder: (BuildContext context, int index) {
-                     List<String> imageUrls = [
-                      'https://i.pinimg.com/originals/13/7a/76/137a764bdefb43d428576829595fc69d.png',
-'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/generic-car-insurance-advertising-dark-and-li-design-template-01f0bbd05a744f8069f2f1debb907aad_screen.jpg?ts=1621196529',                         
-                     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXk5_TNcp2kF11a0MmtMbSFsgvYtr5ELVTCLEjGc6inCp0AkQPYC37ko7kUOzdftygp5U&usqp=CAU', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXk5_TNcp2kF11a0MmtMbSFsgvYtr5ELVTCLEjGc6inCp0AkQPYC37ko7kUOzdftygp5U&usqp=CAU'  ];
+                      List<String> imageUrls = [
+                        'https://i.pinimg.com/originals/13/7a/76/137a764bdefb43d428576829595fc69d.png',
+                        'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/generic-car-insurance-advertising-dark-and-li-design-template-01f0bbd05a744f8069f2f1debb907aad_screen.jpg?ts=1621196529',
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXk5_TNcp2kF11a0MmtMbSFsgvYtr5ELVTCLEjGc6inCp0AkQPYC37ko7kUOzdftygp5U&usqp=CAU',
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXk5_TNcp2kF11a0MmtMbSFsgvYtr5ELVTCLEjGc6inCp0AkQPYC37ko7kUOzdftygp5U&usqp=CAU'
+                      ];
                       return ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(

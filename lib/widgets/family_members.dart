@@ -1,3 +1,7 @@
+import 'dart:math';
+import 'dart:ui';
+
+import 'package:finsec/utils/palette.dart';
 import 'package:finsec/widgets/member_info.dart';
 import 'package:flutter/material.dart';
 
@@ -405,9 +409,62 @@ class _FamilyManagerScreenState extends State<FamilyManagerScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                Positioned(
+                        top: 63,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: BackdropFilter(
+                              filter: ImageFilter.blur(sigmaX: 12.0, sigmaY: 12.0),
+                              child: Container(
+                                width: MediaQuery.of(context).size.width ,
+                                height: 113,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Palette.primary.withOpacity(0.75),
+                                      Palette.primary.withOpacity(0.35),
+                                    ],
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Doshi Family's Net Worth",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Palette.white.withOpacity(0.8),
+                                        ),
+                                      ),
+                                      Text(
+                                        "₹ 45,000",
+                                        style: TextStyle(
+                                          fontSize: 26,
+                                          color: Palette.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+               
+                
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.only(left: 6.0, bottom: 5),
+                  padding: const EdgeInsets.only(top:20, left: 6.0, bottom: 5),
                   child: Text(
                     "Family Members",
                     style: TextStyle(),
@@ -433,23 +490,33 @@ class _FamilyManagerScreenState extends State<FamilyManagerScreen> {
                       String role = members[index].split(' - ')[1];
 
                       return ListTile(
-                        title: Text(name),
-                        subtitle: Text(role),
-                        leading: CircleAvatar(
-                          child: Text(name.substring(0, 1)),
-                        ),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.arrow_forward_ios_outlined),
+                      title: Text(name),
+                      subtitle: Text(role),
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.blueAccent,
+                        child: Icon(Icons.person),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                        IconButton(
+                          icon: Icon(Icons.emoji_events, color: Colors.yellow,),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MemberInfo()),
-                            );
+                          // Handle edit button press
                           },
                         ),
+                        Text(Random().nextInt(100).toString(), style: TextStyle(color: Colors.yellow, fontSize: 16, fontWeight: FontWeight.bold),),
+                        IconButton(
+                          icon: Icon(Icons.arrow_forward_ios),
+                          onPressed: () {
+                          // Handle delete button press
+                          },
+                        ),
+                        ],
+                      ),
                       );
                     },
+                    
                   ),
                 ),
                 Container(
@@ -497,7 +564,8 @@ class _FamilyManagerScreenState extends State<FamilyManagerScreen> {
                           ),
                         ),
                         leading: CircleAvatar(
-                          child: Text(name.substring(0, 1)),
+                          backgroundColor: Colors.blueAccent,
+                          child: Icon(Icons.person),
                         ),
                         // trailing: IconButton(
                         //   icon: const Icon(Icons.arrow_forward_ios_outlined),

@@ -68,9 +68,7 @@ class CustomIosChip extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: smallDescp2(
-            color: isSelected ? ColorConstants.black : Palette.primary
-          ),
+          style: smallDescp2(color: isSelected ? Colors.black : Palette.primary),
         ),
       ),
     );

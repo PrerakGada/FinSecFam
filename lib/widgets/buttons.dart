@@ -1,3 +1,4 @@
+import 'package:finsec/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -35,11 +36,11 @@ class GradientButton extends StatelessWidget {
               SizeConfig.getPercentSize(3),
             ),
             gradient: const LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
               colors: [
-                ColorConstants.primaryPurple,
-                ColorConstants.secondaryPurple,
+                Palette.primary,
+                Palette.pureBlack,
               ],
             )),
         child: textWidget(
@@ -79,7 +80,7 @@ class BorderedButton extends StatelessWidget {
           ),
           border: Border.all(
             width: SizeConfig.getPercentSize(0.5),
-            color: ColorConstants.grey,
+            color: Colors.grey,
           ),
         ),
         child: Row(

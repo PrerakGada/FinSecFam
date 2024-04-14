@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:finsec/utils/routes/app_router.gr.dart';
+import 'package:finsec/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,8 +12,7 @@ class RegisterScreen extends StatelessWidget {
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +55,10 @@ class RegisterScreen extends StatelessWidget {
                   obscureText: true,
                 ),
                 const SizedBox(height: 24.0),
-                ElevatedButton(
-                  child: const Text('Register'),
-                  onPressed: () async {
-                    if (passwordController.text !=
-                        confirmPasswordController.text) {
+                GradientButton(
+                  text: 'Register',
+                  onTap: () async {
+                    if (passwordController.text != confirmPasswordController.text) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Passwords do not match'),
@@ -67,10 +66,7 @@ class RegisterScreen extends StatelessWidget {
                       );
                       return;
                     }
-                    if (await context
-                        .read<AuthStore>()
-                        .createUserWithEmailAndPassword(
-                            emailController.text, passwordController.text)) {
+                    if (await context.read<AuthStore>().createUserWithEmailAndPassword(emailController.text, passwordController.text)) {
                       if (context.mounted) context.router.replace(const MainScaffoldRoute());
                     } else {
                       if (context.mounted) {

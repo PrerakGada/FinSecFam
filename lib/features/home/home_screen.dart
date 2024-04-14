@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:cloud_firestore/cloud_firestore.dart' as fb;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finsec/features/home/weekly_chart.dart';
 import 'package:finsec/features/home/widgets/top_info_section.dart';
 import 'package:finsec/logic/stores/state_store.dart';
@@ -12,9 +12,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
-
-import '../../logic/models/models.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -70,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> getName() async {
     final String uid = FirebaseAuth.instance.currentUser!.uid;
-    final fb.DocumentSnapshot userDoc = await fb.FirebaseFirestore.instance.collection('users').doc(uid).get();
+    final DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
     final String name = userDoc.get('name');
     logger.d(name);
     setState(() {
@@ -118,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         //AutoRouter.of(context).push(NotificationRoute()),
                         await FirebaseAuth.instance.signOut();
                         if (context.mounted) AutoRouter.of(context).replaceAll([const SplashRoute()]);
+                        //StateStore().getInvestments();
                       },
                       child: const Icon(
                         Icons.logout,
@@ -133,31 +131,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: SizedBox(
                   height: 150,
                   width: 370,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Swiper(
-                      itemBuilder: (BuildContext context, int index) {
-                        List<String> imageUrls = [
-                          'https://i.pinimg.com/originals/13/7a/76/137a764bdefb43d428576829595fc69d.png',
-                          'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/generic-car-insurance-advertising-dark-and-li-design-template-01f0bbd05a744f8069f2f1debb907aad_screen.jpg?ts=1621196529',
-                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXk5_TNcp2kF11a0MmtMbSFsgvYtr5ELVTCLEjGc6inCp0AkQPYC37ko7kUOzdftygp5U&usqp=CAU',
-                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXk5_TNcp2kF11a0MmtMbSFsgvYtr5ELVTCLEjGc6inCp0AkQPYC37ko7kUOzdftygp5U&usqp=CAU'
-                        ];
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.network(
-                            imageUrls[index],
-                            fit: BoxFit.cover,
-                          ),
-                        );
-                      },
-                      itemCount: 3,
-                      autoplayDelay: 5,
-                    ),
+                  child: Swiper(
+                    itemBuilder: (BuildContext context, int index) {
+                      List<String> imageUrls = [
+                        'https://i.pinimg.com/originals/13/7a/76/137a764bdefb43d428576829595fc69d.png',
+                        'https://d1csarkz8obe9u.cloudfront.net/posterpreviews/generic-car-insurance-advertising-dark-and-li-design-template-01f0bbd05a744f8069f2f1debb907aad_screen.jpg?ts=1621196529',
+                        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRns73ybPUEC7bN75tcbvB9GwGBVkFvig8_vw&usqp=CAU'
+                      ];
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          imageUrls[index],
+                          fit: BoxFit.fill,
+                        ),
+                      );
+                    },
+                    itemCount: 3,
+                    autoplayDelay: 5,
                   ),
                 ),
               ),
-              const Stack(
+              Stack(
                 children: [
                   // Container(
                   //   margin: EdgeInsets.only(left: Random().nextInt(300).toDouble(), top: Random().nextInt(80).toDouble()),
@@ -419,15 +413,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 shrinkWrap: true,
                                 physics: const BouncingScrollPhysics(),
                                 scrollDirection: Axis.vertical,
-                                itemCount: context.watch<StateStore>().transactions.length,
+                                itemCount: 2,
                                 itemBuilder: (context, index) {
-                                  final Transaction? transaction = context.watch<StateStore>().transactions[index];
-                                  if (transaction == null) return SizedBox();
                                   return RecentTransactionItem(
                                     index: index,
                                     length: 2,
-                                    title: transaction.user?.name ?? "",
-                                    amount: "₹${transaction.amount.toString()}",
+                                    title: "Individual Payment",
+                                    amount: "₹200",
                                     icon: Icons.person,
                                   );
                                 },
@@ -469,8 +461,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Palette.white,
                           borderRadius: BorderRadius.circular(24),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(20),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -529,7 +521,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           color: Palette.white.withOpacity(0.8),
                                         ),
                                       ),
-                                      const Text(
+                                      Text(
                                         "\$254,352",
                                         style: TextStyle(
                                           fontSize: 26,
@@ -557,10 +549,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     image: DecorationImage(image: AssetImage("assets/images/home_gain_bg.png"), fit: BoxFit.fill),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: EdgeInsets.all(20),
                     child: Column(
                       children: [
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
@@ -657,7 +649,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        const Text(
+                        Text(
                           "My Assets",
                           style: TextStyle(
                             fontSize: 17,
@@ -671,7 +663,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             return ListTile(
                               title: Text(
                                 stocks[index]['name'],
-                                style: const TextStyle(color: Palette.white, fontSize: 14),
+                                style: TextStyle(color: Palette.white, fontSize: 14),
                               ),
                               trailing: Text(
                                 '₹${stocks[index]['gain'].toStringAsFixed(2)}',
@@ -699,14 +691,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       return ExpansionTile(
                         title: Text(
                           familyMembers[index]['name'],
-                          style: const TextStyle(color: Palette.white, fontSize: 14),
+                          style: TextStyle(color: Palette.white, fontSize: 14),
                         ),
                         children: familyMembers[index]['transactions'].map<Widget>((transaction) {
                           print(transaction);
                           return ListTile(
                             title: Text(
                               transaction['description'],
-                              style: const TextStyle(color: Palette.white, fontSize: 14),
+                              style: TextStyle(color: Palette.white, fontSize: 14),
                             ),
                             trailing: Text(
                               transaction['amount'].toString(),
@@ -737,7 +729,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // transactions.sort((a, b) => b.time.compareTo(a.time));
 
     // load balance from firestore
-    fb.FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).get().then((value) {
+    FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).get().then((value) {
       setState(() {
         // get bank_accounts
         // balance = value.data()!["bank_accounts"][0]["balance"];
@@ -1010,7 +1002,7 @@ class AplicationData extends StatelessWidget {
         children: [
           Text(
             "$title: ",
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
@@ -1018,7 +1010,7 @@ class AplicationData extends StatelessWidget {
           const SizedBox(width: 8),
           Text(
             value,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
             ),
           ),

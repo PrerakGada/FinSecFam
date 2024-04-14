@@ -50,7 +50,8 @@ ThemeData darkTheme() => ThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
-      ),floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      ),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: Palette.secondary,
       ),
     );

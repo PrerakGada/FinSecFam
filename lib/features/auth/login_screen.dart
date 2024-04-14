@@ -55,9 +55,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       // enlargeStrategy: CenterPageEnlargeStrategy.height,
                     ),
                     items: [
-                      "assets/images/onboard_1.png",
-                      "assets/images/onboard_2.png",
-                      "assets/images/onboard_3.png",
+                      "assets/images/image.png",
+                      "assets/images/image2.png",
+                      "assets/images/image3.png",
                     ]
                         .map(
                           (item) => Image.asset(
@@ -96,12 +96,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           icon: isVisiblePass == false
                               ? Icon(
                                   CupertinoIcons.eye_fill,
-                                  color: ColorConstants.black,
+                                  color: Palette.primary,
                                   size: SizeConfig.getPercentSize(6),
                                 )
                               : Icon(
                                   CupertinoIcons.eye_slash_fill,
-                                  color: ColorConstants.black,
+                                  color: Palette.primary,
                                   size: SizeConfig.getPercentSize(6),
                                 ),
                           obscureText: isVisiblePass,

@@ -55,13 +55,13 @@ class ThemeHelper {
       hintStyle: hintField(),
       errorMaxLines: 3,
       floatingLabelBehavior: FloatingLabelBehavior.always,
-      fillColor: ColorConstants.transparent,
+      fillColor: Colors.transparent,
       border: InputBorder.none,
       suffixIcon: Padding(
         padding: EdgeInsets.all(SizeConfig.getPercentSize(1)),
         child: IconButton(
           icon: suffixIcon ?? const Icon(null),
-          color: ColorConstants.black,
+          color: Palette.black,
           onPressed: onTapIcon,
         ),
       ),
@@ -75,28 +75,28 @@ class ThemeHelper {
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(SizeConfig.getPercentSize(3)),
         borderSide: BorderSide(
-          color: ColorConstants.primaryPurple,
+          color: Palette.primary,
           width: 2,
         ),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(SizeConfig.getPercentSize(3)),
         borderSide: BorderSide(
-          color: ColorConstants.primaryPurple,
+          color: Palette.primary,
           width: 2,
         ),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(SizeConfig.getPercentSize(3)),
         borderSide: BorderSide(
-          color: ColorConstants.red,
+          color: Colors.red,
           width: 2,
         ),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(SizeConfig.getPercentSize(3)),
         borderSide: BorderSide(
-          color: ColorConstants.red,
+          color: Colors.red,
           width: 2,
         ),
       ),

@@ -33,6 +33,7 @@ TextStyle smallDescp({Color? color}) {
     color: color ?? ColorConstants.black,
   );
 }
+
 TextStyle smallDescp2({Color? color}) {
   return TextStyle(
     fontSize: SizeConfig.getPercentSize(3.8),
@@ -53,7 +54,7 @@ TextStyle textField({Color? color}) {
   return TextStyle(
     fontSize: SizeConfig.getPercentSize(4.6),
     fontWeight: FontWeight.w500,
-    color: color ?? ColorConstants.black,
+    color: color ?? ColorConstants.white,
   );
 }
 
@@ -77,6 +78,6 @@ TextStyle buttonSmall() {
   return TextStyle(
     fontSize: SizeConfig.getPercentSize(4.5),
     fontWeight: FontWeight.w500,
-    color: ColorConstants.black,
+    color: ColorConstants.white,
   );
 }

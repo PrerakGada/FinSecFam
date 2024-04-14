@@ -6,6 +6,7 @@ import 'package:finsec/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class MoneyManagerScreen extends StatefulWidget {
   const MoneyManagerScreen({Key? key}) : super(key: key);
@@ -16,6 +17,14 @@ class MoneyManagerScreen extends StatefulWidget {
 
 class _MoneyManagerScreenState extends State<MoneyManagerScreen> {
   DateTime selectedDate = DateTime.now();
+  final Map<DateTime, List<String>> events = {
+    DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day): ['Prerak paid \$450', 'Prinkal earned \$50'],
+    DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1): ['Arnav invested \$500'],
+    // add more events as needed
+  };
+  var _calendarFormat = CalendarFormat.month;
+  var _selectedDay = DateTime.now();
+  var _focusedDay = DateTime.now();
   int selectedIndex = 0;
 
   @override
@@ -82,6 +91,48 @@ class _MoneyManagerScreenState extends State<MoneyManagerScreen> {
               });
             },
             isiOS: false,
+          ),
+          TableCalendar(
+            firstDay: DateTime.utc(2020, 10, 16),
+            lastDay: DateTime.utc(2030, 3, 14),
+            focusedDay: DateTime.now(),
+            calendarFormat: _calendarFormat,
+            onPageChanged: (focusedDay) {
+              _focusedDay = focusedDay;
+            },
+            onFormatChanged: (format) {
+              setState(() {
+                _calendarFormat = format;
+              });
+            },
+            calendarStyle: CalendarStyle(
+              todayDecoration: BoxDecoration(
+                color: Colors.blue,
+                shape: BoxShape.circle,
+              ),
+            ),
+            selectedDayPredicate: (day) {
+              return isSameDay(_selectedDay, day);
+            },
+            onDaySelected: (selectedDay, focusedDay) {
+              setState(() {
+                _selectedDay = selectedDay;
+                _focusedDay = focusedDay; // update `_focusedDay` here as well
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      final events = this.events[DateTime.utc(selectedDay.year, selectedDay.month, selectedDay.day)] ?? [];
+                      return SimpleDialog(
+                        title: Text('Transactions on ${DateFormat.yMd().format(selectedDay)}'),
+                        children: events.map((event) => ListTile(title: Text(event))).toList(),
+                      );
+                    });
+              });
+            },
+            eventLoader: (day) {
+              print(events);
+              return events[day] ?? [];
+            },
           ),
         ],
       ),
